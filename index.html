@@ -4,90 +4,7 @@
 <head>
   <title>Mobile Deeplink Invoker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 450px;
-      padding: 20px;
-      background-color: #f9f9f9;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    label {
-      font-weight: bold;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      transition: border-color 0.3s;
-    }
-
-    input[type="text"]:focus {
-      border-color: #4CAF50;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .instructions {
-      display: none;
-      margin-top: 20px;
-    }
-
-    .instructions h2 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .instructions p {
-      margin-bottom: 5px;
-    }
-
-    /* Responsive styles */
-    pre {
-      word-wrap: break-word;
-      font-size: 10px;
-    }
-
-    @media (max-width: 600px) {
-      pre {
-        font-size: 10px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
@@ -98,6 +15,7 @@
     <label for="payloadInput">Enter Payload:</label>
     <input type="text" id="payloadInput" placeholder="e.g., key1=value1&key2=value2">
     <button onclick="invokeAppScheme()">Open App</button>
+
     <div class="instructions">
       <h2>How to use for Android:</h2>
       <p> 1. Implement deep linking in your Android app. Add intent filters in your AndroidManifest.xml to handle the
@@ -152,30 +70,7 @@
         schemes. </p>
     </div>
   </div>
-  <script>
-    function invokeAppScheme() {
-      var appScheme = document.getElementById("appSchemeInput").value;
-      var payload = document.getElementById("payloadInput").value;
-      if (appScheme) {
-        if (payload) {
-          appScheme += "?" + payload;
-        }
-        // Attempt to open the app
-        window.location.href = appScheme;
-        // Timeout to redirect to app store if the app is not installed
-        setTimeout(function () {
-          window.location.href = "https://your-app-store-link"; // Replace with your app's store link
-        }, 2000); // Adjust the timeout duration (milliseconds) as needed
-      } else {
-        alert("Please enter an app scheme!");
-      }
-    }
-    // Show instructions on page load
-    document.addEventListener("DOMContentLoaded", function () {
-      var instructions = document.querySelector(".instructions");
-      instructions.style.display = "block";
-    });
-  </script>
+  <script src="./js/index.js"></script>
 </body>
 
 </html>
