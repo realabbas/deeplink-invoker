@@ -1,6 +1,6 @@
-# App Scheme Invoker
+# Mobile Deeplink Invoker
 
-App Scheme Invoker is a simple web app that allows users to invoke custom app schemes on Android and iOS devices. It provides a user-friendly interface to enter the app scheme and an optional payload. The app then attempts to open the specified app using the provided scheme and payload.
+This is a simple web app that allows users to invoke custom app schemes on Android and iOS devices. It provides a user-friendly interface to enter the app scheme and an optional payload. The app then attempts to open the specified app using the provided scheme and payload.
 
 ## Demo
 
