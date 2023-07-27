@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Mobile Deeplink Invoker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 450px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #4CAF50;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .instructions {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .instructions h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .instructions p {
+      margin-bottom: 5px;
+    }
+
+    /* Responsive styles */
+    pre {
+      word-wrap: break-word;
+      font-size: 10px;
+    }
+
+    @media (max-width: 600px) {
+      pre {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>App Scheme Invoker</h1>
+    <label for="appSchemeInput">Enter App Scheme:</label>
+    <input type="text" id="appSchemeInput" placeholder="e.g., myapp://action">
+    <label for="payloadInput">Enter Payload:</label>
+    <input type="text" id="payloadInput" placeholder="e.g., key1=value1&key2=value2">
+    <button onclick="invokeAppScheme()">Open App</button>
+    <div class="instructions">
+      <h2>How to use for Android:</h2>
+      <p> 1. Implement deep linking in your Android app. Add intent filters in your AndroidManifest.xml to handle the
+        custom URI scheme. For example: </p>
+      <pre>
+&lt;activity android:name=".MainActivity"&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name="android.intent.action.VIEW" /&gt;
+        &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+        &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
+        &lt;data
+            android:scheme="your_custom_scheme"
+            android:host="action" /&gt;
+    &lt;/intent-filter&gt;
+&lt;/activity&gt;
+            </pre>
+      <p> Replace "your_custom_scheme" with your actual app scheme and "action" with the corresponding host value. </p>
+      <p> 2. Enter your App Scheme in the input field above, using the same custom URI scheme configured in your
+        AndroidManifest.xml. </p>
+      <p> 3. (Optional) If your app requires additional data, you can enter a payload in the "Enter Payload" field. The
+        payload should be in key-value format, e.g., key1=value1&key2=value2. </p>
+      <p> 4. Click the "Open App" button. If the app is installed on your Android device and the scheme is correctly
+        configured, it will open and handle the specified action. </p>
+      <p> 5. If the app is not installed, you will be redirected to the app store to download it. After installation,
+        return to this page and try opening the app again. </p>
+      <h2>How to use for iOS:</h2>
+      <p> 1. Implement deep linking in your iOS app. Open your app's Info.plist file and add a new URL scheme with your
+        custom URI scheme. For example: </p>
+      <pre>
+&lt;key>CFBundleURLTypes&lt;/key&gt;
+&lt;array&gt;
+    &lt;dict&gt;
+        &lt;key>CFBundleURLName&lt;/key&gt;
+        &lt;string>YourAppName&lt;/string&gt;
+        &lt;key>CFBundleURLSchemes&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string>your_custom_scheme&lt;/string&gt;
+        &lt;/array&gt;
+    &lt;/dict&gt;
+&lt;/array&gt;
+            </pre>
+      <p> Replace "your_custom_scheme" with your actual app scheme. </p>
+      <p> 2. Enter your App Scheme in the input field above, using the same custom URI scheme configured in your
+        Info.plist file. </p>
+      <p> 3. (Optional) If your app requires additional data, you can enter a payload in the "Enter Payload" field. The
+        payload should be in key-value format, e.g., key1=value1&key2=value2. </p>
+      <p> 4. Click the "Open App" button. If the app is installed on your iOS device and the scheme is correctly
+        configured, it will open and handle the specified action. </p>
+      <p> 5. If the app is not installed, you will be redirected to the app store to download it. After installation,
+        return to this page and try opening the app again. </p>
+      <p> Note: App Scheme handling on iOS requires proper configuration in your app's Info.plist file to allow URL
+        schemes. </p>
+    </div>
+  </div>
+  <script>
+    function invokeAppScheme() {
+      var appScheme = document.getElementById("appSchemeInput").value;
+      var payload = document.getElementById("payloadInput").value;
+      if (appScheme) {
+        if (payload) {
+          appScheme += "?" + payload;
+        }
+        // Attempt to open the app
+        window.location.href = appScheme;
+        // Timeout to redirect to app store if the app is not installed
+        setTimeout(function () {
+          window.location.href = "https://your-app-store-link"; // Replace with your app's store link
+        }, 2000); // Adjust the timeout duration (milliseconds) as needed
+      } else {
+        alert("Please enter an app scheme!");
+      }
+    }
+    // Show instructions on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      var instructions = document.querySelector(".instructions");
+      instructions.style.display = "block";
+    });
+  </script>
+</body>
+
+</html>
